@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="This is a site news">
+        <meta name="keywords" content="news">
+        <title>News site</title>
+        <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}">
+        <script src={% static "assets/js/bootstrap.min.js" %}></script>
+    </head>
+    <body>
+        <nav>
+            <div class="container">
+                <a href="{% url "home" %}">News Site</a>
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="">Post</a>
+                        </li>
+                        <li>
+                            <a href="">Groups</a>
+                        </li>
+                        <li>
+                            <a href="">Create Group</a>
+                        </li>
+                        <li>
+                            <a href="{% url "accounts:logout" %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="">Groups</a>
+                        </li>
+                        <li>
+                            <a href="{% url "accounts:login" %}">Log In</a>
+                        </li>
+                        <li>
+                            <a href="{% url "accounts:signup" %}">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <script src={% static "assets/js/bootstrap.min.js" %}></script>
+    </body>
+</html>
