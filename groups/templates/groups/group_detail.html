@@ -1,0 +1,26 @@
+{% extends "groups/group_base.html" %}
+{% block pregroup %}
+    {% comment %} referencia a la clase Group y el atributo name {% endcomment %}
+    <h1>{{ group.name }}</h1>
+    <h2>Member Count: {{ group.members.count }}</h2>
+    <div class="content">
+        {% if user in group.members.all %}
+            <a href="{% url "groups:leave" slug=group.slug %}">Leave</a>
+        {% else %}
+            <a href="{% url "groups:join" slug=group.slug %}">Join</a>
+        {% endif %}
+    </div>
+{% endblock pregroup %}
+{% block group_content %}
+    <div>
+        {% if groups.posts.counts == 0 %}
+            <h2>No posts in this group yet</h2>
+        {% else %}
+            {% for post in group.posts.all %}
+                {% comment %} include es similar a extends pero en medio del template {% endcomment %}
+                {% comment %} _post.html tiene un underscore para indicar al desarrollador que el archivo es un fragmento de codigo HTML que se va a inyectar dentro de otro y no un archivo HTML funcional {% endcomment %}
+                {% include "post/_post.html" %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock group_content %}
