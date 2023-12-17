@@ -19,7 +19,7 @@
             {% for post in group.posts.all %}
                 {% comment %} include es similar a extends pero en medio del template {% endcomment %}
                 {% comment %} _post.html tiene un underscore para indicar al desarrollador que el archivo es un fragmento de codigo HTML que se va a inyectar dentro de otro y no un archivo HTML funcional {% endcomment %}
-                {% include "post/_post.html" %}
+                {% include "posts/_post.html" %}
             {% endfor %}
         {% endif %}
     </div>

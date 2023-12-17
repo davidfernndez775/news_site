@@ -6,7 +6,7 @@ import misaka
 from django.urls import reverse
 # el metodo get_user_model identifica al usuario que esta registrado y lo conecta a la clase User
 from django.contrib.auth import get_user_model
-User = get_user_model  # nopep8
+User = get_user_model()  # nopep8
 # todavia no entiendo la importacion del template
 from django import template  # nopep8
 register = template.Library()  # nopep8
@@ -32,6 +32,7 @@ class Group(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    # redefinimos la funcion save para guardar aplicando el slug y el markdown
     def save(self, *args, **kwargs):
         '''funcion que mejora la visualidad en la direccion del navegador'''
         self.slug = slugify(self.name)
@@ -52,9 +53,11 @@ class Group(models.Model):
 
 class GroupMember(models.Model):
     # relaciona al miembro con el grupo
-    group = models.ForeignKey(Group, related_name='memberships')
+    group = models.ForeignKey(
+        Group, related_name='memberships', on_delete=models.CASCADE)
     # relaciona al miembro con el usuario
-    user = models.ForeignKey(User, related_name='user_groups')
+    user = models.ForeignKey(
+        User, related_name='user_groups', on_delete=models.CASCADE)
 
     # devuelve el nombre del usuario referenciado al atributo username de la clase User
     def __str__(self) -> str:
